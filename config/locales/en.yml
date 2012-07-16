@@ -1,0 +1,26 @@
+#encoding: utf-8
+en:
+  activerecord:
+    attributes:
+      user:
+        name: "Nome"
+        email: "Email"
+        password: "Senha"
+      company:
+        name: "Nome"
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "não pode ser vazio"
+            email:
+              blank: "não pode ser vazio"
+              taken: "já está em uso"
+            password:
+              blank: "não pode ser vazio"
+              confirmation: "não confere"
+        company:
+          attributes:
+            name:
+              blank: "não pode ser vazio"

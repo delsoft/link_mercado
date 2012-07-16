@@ -1,0 +1,20 @@
+<h1>Nova empresa</h1>
+<%= form_for @company, :url => "/empresas" do |f| %>
+	<% if @company.errors.any? %>
+  	<div id="errorExplanation">
+	    <ul>
+	    <% @company.errors.full_messages.each do |msg| %>
+	      <li><%= msg %></li>
+	    <% end %>
+	    </ul>
+	</div>
+	<% end %>
+  	<p>
+		<%= f.label :name, "Nome" %><br />
+		<%= f.text_field :name %>
+	</p>
+	<p>
+		<%= f.submit "Criar empresa" %>
+	</p>
+<% end %>
+<%= link_to "Voltar", dashboard_path %>  

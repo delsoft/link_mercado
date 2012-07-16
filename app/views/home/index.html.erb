@@ -1,0 +1,18 @@
+<h1>Link Mercado</h1>
+<% if flash[:notice] %>
+	<p><%= flash[:notice] %></p>
+<% end %>
+<form action="/entrar" method="post">
+	<p>
+		<label for="email">Email</label>
+		<input type="text" name="email" />
+	</p>
+	<p>
+		<label for="password">Senha</label>
+		<input type="password" name="password" />
+		<input type="submit" value="Entrar" />
+	</p>
+</form>
+<a href="/usuarios/novo">Criar novo usuário</a><br />
+<a href="#">Esqueci a senha</a><br />
+

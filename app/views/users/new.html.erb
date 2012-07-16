@@ -1,0 +1,32 @@
+<h1>Novo usuário</h1>
+<%= form_for @user, :url => "/usuarios" do |f| %>
+	<% if @user.errors.any? %>
+  	<div id="errorExplanation">
+	    <ul>
+	    <% @user.errors.full_messages.each do |msg| %>
+	      <li><%= msg %></li>
+	    <% end %>
+	    </ul>
+	</div>
+	<% end %> 
+  	<p> 
+		<%= f.label :name, "Nome" %><br />
+		<%= f.text_field :name %>
+	</p>
+	<p>
+		<%= f.label :email, "Email" %><br />
+		<%= f.text_field :email %>
+	</p>
+	<p>
+		<%= f.label :password, "Senha" %><br />
+		<%= f.password_field :password %>
+	</p>
+	<p>
+		<%= f.label :password_confirmation, "Confirmação de senha" %><br />
+		<%= f.password_field :password_confirmation %>
+	</p>
+	<p>
+		<%= f.submit "Criar usuário" %>
+	</p>
+<% end %>
+<%= link_to "Voltar", root_path %>  
