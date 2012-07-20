@@ -7,12 +7,11 @@ class BusinessUnit < ActiveRecord::Base
   belongs_to :business_group, :dependent => :destroy
   has_and_belongs_to_many :professional_activities
   has_and_belongs_to_many :payment_methods  
+  has_and_belongs_to_many :addresses   
   has_many :timetable, :dependent => :destroy
   has_many :product_availables, :dependent => :destroy
   has_many :service_availables, :dependent => :destroy
   has_many :brand_availables, :dependent => :destroy
-  
-  has_and_belongs_to_many :addresses   
   
   validates_presence_of :business_group_id
   validates :name, :uniqueness => true, :presence => true

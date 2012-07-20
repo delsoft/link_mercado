@@ -11,18 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20120709182642) do
-=======
-ActiveRecord::Schema.define(:version => 20120711211300) do
->>>>>>> alterações de modelos
+ActiveRecord::Schema.define(:version => 20120719171741) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "state_id"
     t.integer  "city_id"
     t.integer  "district_id"
-    t.string   "street_name"
-    t.string   "string"
     t.integer  "house_number"
     t.string   "zip_code"
     t.string   "additional_address"
@@ -89,8 +83,9 @@ ActiveRecord::Schema.define(:version => 20120711211300) do
 
   create_table "contacts", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "business_unit_id"
   end
 
   create_table "districts", :force => true do |t|
@@ -105,10 +100,32 @@ ActiveRecord::Schema.define(:version => 20120711211300) do
     t.string   "address"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "contact_id"
+  end
+
+  create_table "invitations", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "guest_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "payment_methods", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "permission_invitations", :force => true do |t|
+    t.integer  "invitation_id"
+    t.integer  "profile_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "permissions", :force => true do |t|
+    t.integer  "company_id"
+    t.integer  "profile_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -120,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20120711211300) do
     t.string   "extension"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "contact_id"
   end
 
   create_table "product_availables", :force => true do |t|
@@ -135,6 +153,12 @@ ActiveRecord::Schema.define(:version => 20120711211300) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "profiles", :force => true do |t|
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "service_availables", :force => true do |t|
     t.integer  "business_unit_id"
     t.string   "description"
@@ -148,16 +172,22 @@ ActiveRecord::Schema.define(:version => 20120711211300) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "street_types", :force => true do |t|
+    t.string   "name"
+    t.string   "shorte"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "streets", :force => true do |t|
     t.integer  "state_id"
     t.integer  "city_id"
     t.integer  "district_id"
     t.string   "name"
-    t.integer  "number"
-    t.string   "additional_data"
     t.string   "zip_code"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "street_type"
   end
 
   create_table "timetables", :force => true do |t|
@@ -172,9 +202,9 @@ ActiveRecord::Schema.define(:version => 20120711211300) do
 
   create_table "type_contacts", :force => true do |t|
     t.string   "description"
-    t.boolean  "is_system"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.boolean  "is_system",   :default => false
   end
 
   create_table "type_web_midia", :force => true do |t|
@@ -195,6 +225,7 @@ ActiveRecord::Schema.define(:version => 20120711211300) do
     t.string   "reset_password_code"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.integer  "permission_id"
   end
 
   create_table "web_midia", :force => true do |t|

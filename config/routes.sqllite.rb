@@ -2,16 +2,12 @@ Linkmercado::Application.routes.draw do
   # Rotas de usuários
   post "/usuarios" => "users#create"
   get  "/usuarios/novo" => "users#new"
-
+  get  "/usuarios/esqueceisenha" => "users#forget"
+  
   # Rotas de empresas
   get  "/empresas" => "companies#index", as: :companies
   post "/empresas" => "companies#create"
   get  "/empresas/novo" => "companies#new"
-
-  # Rotas de conta
-  get  "/contas" => "accounts#index", as: :accounts
-  post "/contas" => "accounts#create"
-  get  "/contas/novo" => "accounts#new"
 
   # Rotas de sessão
   post "/entrar" => "sessions#create"

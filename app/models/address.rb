@@ -1,11 +1,10 @@
 class Address < ActiveRecord::Base
-  attr_accessible :additional_address, :city_id, :district_id, :house_number, :state_id, :street_name, :string, :zip_code
+  attr_accessible :additional_address, :city_id, :district_id, :house_number, :state_id, :string, :zip_code
   
   belongs_to :state
   belongs_to :city
   belongs_to :district
   
-  validates :street_name, :presence => true
   validates :city_id, :presence => true
   validates :state_id, :presence => true
   validates :district_id, :presence => true
