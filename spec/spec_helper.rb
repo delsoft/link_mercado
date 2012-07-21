@@ -64,13 +64,88 @@ def validate_uniqueness(symbol, presence_flds, options={})
 
   raise "RSpec not found, are you using block ''it''? " unless respond_to?('validate_presence_of')
   raise "invalid options, it's a hash?" unless options.instance_of?(Hash)
-  raise "invalid presence_flds, it's a array of fields name?" unless presence_flds.instance_of?(Array)
+  #raise "invalid presence_flds, it's a array of fields name?" unless presence_flds.instance_of?(Array)
+  
+  model = FactoryGirl.create(symbol)
+  
+  model.should be_valid
+  
+  
+  scope = options[:scoped_to]
+  
+   
+  
+  tmp = []        
+  
+  presence_flds = [] << presence_flds unless presence_flds.class == Array  
+  presence_flds.each{|k| tmp << k.to_s }      
+  presence_flds = tmp
+  
+  ignore_flds = []
+  if options.has_key?(:ignore_attributes) then
+    options[:ignore_attributes].each{|k| ignore_flds << k.to_s } 
+  end
+  
+  all_attr = model.attributes.keys -  ["id","created_at","updated_at"] - ignore_flds
+  
+  pres_attr = presence_flds
+  
+  not_pres_attr = all_attr - pres_attr
+   
+   if scope then
+      return 
+      
+       # (@d.business_unit_id != @c.business_unit_id).should be_true
+#       
+      # @d.business_unit_id = @c.business_unit_id
+      # @d.name = @c.name
+      # @d.should_not be_valid
+#       
+      # @d.name += 'x'
+      # @d.should be_valid
+#       
+     model2 = model = FactoryGirl.create(symbol)
+     model2.should be_valid
+     
+     
+     scope = [] << scope unless scope.class == Array
+     
+     # os dois modelos devem representar escopos diferentes
+     scope.each{|fld| 
+       a = model.send(fld.to_s);
+       b = model2.send(fld.to_s)
+       a.should != b
+       }
+   
+     # testando presença no mesmo escopo
+     model.save.should be_true
+      pres_attr.each{fld| 
+        model.send("{#fld.to_s}=", model2.send("#{fld.to_s}") )
+        }
+   
+   else
+     
+     pres_attr.each{ |k| should validate_uniqueness_of(k.to_sym) }
+   
+     not_pres_attr.each{ |k| should_not validate_uniqueness_of(k.to_sym) }
+     
+   end
+end
+
+=begin
+ def validate_uniqueness(symbol, presence_flds, options={})
+
+  raise "RSpec not found, are you using block ''it''? " unless respond_to?('validate_presence_of')
+  raise "invalid options, it's a hash?" unless options.instance_of?(Hash)
+  #raise "invalid presence_flds, it's a array of fields name?" unless presence_flds.instance_of?(Array)
   
   model = FactoryGirl.create(symbol)
   
   model.should be_valid
   
   tmp = []        
+  
+  presence_flds = [] << presence_flds unless presence_flds.class == Array  
   presence_flds.each{|k| tmp << k.to_s }      
   presence_flds = tmp
   
@@ -94,7 +169,9 @@ def validate_uniqueness(symbol, presence_flds, options={})
   }
    
 end
-
+ 
+=end
+ 
 def validate_presence(symbol, presence_flds, options={})
 
   raise "RSpec not found, are you using block ''it''? " unless respond_to?('validate_presence_of')
@@ -144,6 +221,51 @@ def validate_presence(symbol, presence_flds, options={})
       should_not validate_presence_of(k.to_sym)
     }
   end 
+end
+
+def validate_valid_values(symbol, attribute, options={})
+
+  puts "------------------------------"
+  puts "options #{options.inspect}"
+  puts "symbol #{symbol.inspect}"
+  puts "attribute #{attribute.inspect}"
+  
+  options = [] << options unless options.class == Hash
+  
+  raise "Nenhum valor para checar, verifique :valid_values e :invalid_values" unless options[:valid_values] or options[:invalid_values]
+  raise "RSpec not found, are you using block ''it''? " unless respond_to?('validate_presence_of')
+  raise "invalid options, it's a hash?" unless options.instance_of?(Hash)
+  
+  model = FactoryGirl.create(symbol.to_sym)
+  
+  model.should be_valid
+  
+  tmp = []
+  
+  attribute = attribute.to_sym
+  
+  valid_values = options[:valid_values] || []
+  invalid_values = options[:invalid_values] || []
+  
+  
+  
+  
+  valid_values = [] << valid_values unless  valid_values.class == Array
+  invalid_values = [] << invalid_values unless invalid_values.class == Array 
+    
+  valid_values.each{ |k|
+      model.send("#{attribute}=", k)
+      model.should be_valid
+    }
+  
+  invalid_values.each{ |k|
+      puts k.class
+      model.send("#{attribute}=", k)
+      puts "     .attribute = #{k}"
+      puts "      model.attribute = #{model.send(attribute.to_s)}"
+      model.should_not be_valid
+    }
+    
 end
 
 =begin

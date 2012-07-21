@@ -6,7 +6,7 @@ describe Address do
   context "create" do
     pending "deveria endereço (logradouro) ser unico para cada cidade??  confirmar isso"
     
-    it {validate_presence(:address, [:state_id, :city_id, :district_id, :street_name])}
+    it {validate_presence(:address, [:state_id, :city_id, :district_id])}
       
   end
   

@@ -8,12 +8,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-<<<<<<< HEAD
-if Rails.env.development? or Rails.env.test? then
-=======
 
 if Rails.env.development? then
->>>>>>> alterações de modelos
   
   if ProfessionalActivity.count == 0 then
     ProfessionalActivity.create  [
@@ -31,11 +27,7 @@ if Rails.env.development? then
   
 end
 
-<<<<<<< HEAD
-if Rails.env.development? then
-=======
 if Rails.env.development? or Rails.env.production? then
->>>>>>> alterações de modelos
   
   valid_ufs = %w(AC AL AM AP BA CE DF ES GO MA MG MS MT PA PB PE PI PR RJ RN RO RR RS SC SE SP TO BR)
   valid_ufs.each {|uf| s = State.create(:name => uf).save unless State.find_by_name(uf) }
