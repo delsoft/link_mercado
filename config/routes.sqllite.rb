@@ -16,4 +16,7 @@ Linkmercado::Application.routes.draw do
   get "/painel" => "dashboard#index", as: :dashboard
   
   root to: 'home#index'
+  
+  resources :business_units
+  
 end

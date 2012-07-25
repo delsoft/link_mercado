@@ -1,0 +1,21 @@
+<h1>Listing business_units</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @business_units.each do |business_unit| %>
+  <tr>
+    <td><%= link_to 'Show', business_unit %></td>
+    <td><%= link_to 'Edit', edit_business_unit_path(business_unit) %></td>
+    <td><%= link_to 'Destroy', business_unit, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Business unit', new_business_unit_path %>

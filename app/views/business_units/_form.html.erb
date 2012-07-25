@@ -1,0 +1,49 @@
+<%= form_for(@business_unit) do |f| %>
+  <% if @business_unit.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@business_unit.errors.count, "error") %> prohibited this business_unit from being saved:</h2>
+
+      <ul>
+      <% @business_unit.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="fields">
+ 
+ <p class="field">
+ <%= f.label :business_group %>
+ <%= collection_select(:business_unit, :business_group_id, BusinessGroup.all, :id, :name, :prompt => "...") %>
+ </p>
+ 
+ <p class="field">
+ <%= f.label :name %>
+ <%= f.text_field :name %>
+ </p>
+ 
+ <p class="field">
+ <%= f.label :description %>
+ <%= f.text_field :description %>
+ </p>
+ 
+ <p class="field">
+ <%= f.label :cnpj %>
+ <%= f.text_field :cnpj %>
+ </p>
+ 
+ <p class="field">
+ <%= f.label :cpf %>
+ <%= f.text_field :cpf %>
+ </p>
+ 
+<div>
+	
+  <br />
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  l
+<% end %>

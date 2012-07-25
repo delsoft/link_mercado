@@ -25,6 +25,7 @@ describe FactoryGirl.build(:contact) do
       
     end
     
+    
     it "deveria o 'name' ser bem formatado" do
       @c.name = '     teste  da     silva   '
       @c.should be_valid
