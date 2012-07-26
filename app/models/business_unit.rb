@@ -23,8 +23,17 @@ class BusinessUnit < ActiveRecord::Base
   
   validates_as_cpf :cpf, :allow_blank => true
   
+  before_validation :ensure_has_owner 
+  
   private
   
+  def ensure_has_owner
+      return if owner
+      #owner = current_user
+      #  pra teste sem logar
+      self[:owner] = User.first unless owner    
+  end
+    
   def exclusive_cnpj_or_cpf
     if not cnpj.blank? and not cpf.blank? then
       errors.add(:cpf, 'Não é possível usar cpf e cnpj simultaneamente')
